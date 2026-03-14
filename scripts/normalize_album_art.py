@@ -171,6 +171,12 @@ def main(argv: list[str]) -> int:
         description="Normalize album pictures in a directory, embedding them into audio files if necessary.",
     )
     parser.add_argument("root", type=str, help="Root directory to process")
+    parser.add_argument(
+        "--depth",
+        type=int,
+        default=1,
+        help="How many parent directories to search for cover images",
+    )
     args = parser.parse_args(argv)
 
     root: Path = Path(args.root)
@@ -184,7 +190,7 @@ def main(argv: list[str]) -> int:
     for cur_entry in tqdm.tqdm(all_files, desc="Processing files", unit="file"):
         if cur_entry.is_file():
             if (cur_audio := AudioFile(root, cur_entry)).is_audio() and (
-                cover_data := cur_audio.find_cover()
+                cover_data := cur_audio.find_cover(depth=args.depth)
             ):
                 cur_audio.embed_cover(cover_data)
 
