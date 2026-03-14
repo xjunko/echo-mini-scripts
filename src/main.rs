@@ -145,6 +145,36 @@ fn main() {
                 }
             });
 
+            if tag.picture_count() == 0 {
+                if let Some(art_path) = &nearby_art {
+                    let new_image = ImageReader::open(art_path)
+                        .expect("failed to open nearby album art")
+                        .decode()
+                        .expect("failed to decode nearby album art");
+                    let resized_img = new_image.resize(
+                        target_size,
+                        target_size,
+                        FilterType::Lanczos3,
+                    );
+                    let mut buf = Cursor::new(Vec::new());
+                    resized_img
+                        .write_to(&mut buf, image::ImageFormat::Jpeg)
+                        .expect("failed to write image into buffer");
+
+                    let new_picture = Picture::unchecked(buf.into_inner())
+                        .pic_type(picture::PictureType::CoverFront)
+                        .mime_type(picture::MimeType::Jpeg)
+                        .build();
+                    new_pictures.push(new_picture);
+                    dirty = true;
+                } else {
+                    println!(
+                        "No existing album art and no nearby art found for {}. Skipping.",
+                        entry.path().display()
+                    );
+                }
+            }
+
             for (i, new_picture) in new_pictures.into_iter().enumerate() {
                 tag.set_picture(i, new_picture);
             }
