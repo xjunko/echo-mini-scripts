@@ -1,0 +1,8 @@
+services:
+  normalize-art:
+    build: .
+    image: normalize-album-art:latest
+    container_name: normalize-album-art
+    volumes:
+      - ./music:/music
+    command: /music
