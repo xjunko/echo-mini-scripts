@@ -23,3 +23,4 @@ python scripts/normalize_album_art.py /path/to/folder
 ### what it supports now:
 - mp3 (id3 apic)
 - flac
+- m4a aac
