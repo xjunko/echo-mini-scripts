@@ -9,7 +9,7 @@ if a file has no embedded cover, it tries to find a nearby image (like cover.jpg
 
 ### usage:
 ```bash
-python normalize_album_art.py /path/to/folder
+python scripts/normalize_album_art.py /path/to/folder
 ```
 
 ### how to use:
