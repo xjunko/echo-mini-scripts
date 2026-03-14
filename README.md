@@ -5,39 +5,36 @@ a Rust CLI that scans a music folder and normalizes embedded album art to square
 - default output size is `500x500`.
 - if a track has missing/invalid art, it tries to use a nearby image in the same folder (`.jpg`, `.jpeg`, `.png`, `.webp`, `.bmp`).
 
-## Build
+  
+**[[latest download]](https://github.com/xjunko/echo-mini-scripts/releases/latest)**
+
+## build
 
 ```bash
 cargo build --release
 ```
 
-Binary output:
+## usage
 
-```bash
-target/release/normalize-album-art
-```
-
-## Usage
-
-Run with defaults (`500x500`):
+run with defaults (`500x500`):
 
 ```bash
 cargo run --release -- /path/to/music
 ```
 
-Set a custom target size:
+set a custom target size:
 
 ```bash
 cargo run --release -- /path/to/music --size 600
 ```
 
-You can also run the compiled binary directly:
+you can also run the compiled binary directly:
 
 ```bash
 ./target/release/normalize-album-art /path/to/music --size 500
 ```
 
-## Supported audio file extensions
+## supported audio file extensions
 
 - `mp3`
 - `flac`
