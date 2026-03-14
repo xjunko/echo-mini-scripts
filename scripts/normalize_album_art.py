@@ -9,6 +9,7 @@ from pathlib import Path
 import tqdm
 from mutagen import flac
 from mutagen import id3
+from mutagen import mp4
 from PIL import Image
 
 AUDIO_HEADERS: dict[str, Callable[[bytes], bool]] = {
@@ -159,6 +160,24 @@ class AudioFile:
                 modified = True
             if modified:
                 tags.save()
+            return modified
+        elif self.fmt == "M4A_AAC":
+            audio = mp4.MP4(self.file)
+            current_cover = audio.get("covr")
+
+            if current_cover:
+                for idx, cov in enumerate(current_cover):
+                    resized_data, dirty = resize_image(cov)
+                    if dirty:
+                        current_cover[idx] = resized_data
+                        modified = True
+            else:
+                audio["covr"] = [
+                    mp4.MP4Cover(data, imageformat=mp4.MP4Cover.FORMAT_JPEG),
+                ]
+                modified = True
+            if modified:
+                audio.save()
             return modified
         else:
             print("Unsupported format:", self.fmt)
