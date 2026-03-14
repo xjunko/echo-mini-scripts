@@ -15,9 +15,9 @@ python scripts/normalize_album_art.py /path/to/folder
 ### how to use:
 1. make sure you have python 3.14+.
 2. install deps:
-	pip install mutagen pillow tqdm
+	`pip install mutagen pillow tqdm`
 3. run:
-	python normalize_album_pictures.py /path/to/music
+	`python normalize_album_art.py /path/to/music`
 4. wait for it to finish scanning and writing updated tags.
 
 ### what it supports now:
